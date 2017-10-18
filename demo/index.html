@@ -12,6 +12,7 @@
         padding-top: 7px;
         padding-right: 10px;
     }
+
     .uk-modal-body {
         background: #fff;
     }
@@ -197,7 +198,7 @@ $('#form2').zoiaFormBuilder({
             label: 'Launcher Field',
             labelBtn: 'Select',
             value: 'Current Value'
-        },
+        },        
         buttons: {
             type: 'buttons',
             css: 'uk-margin-top',
@@ -253,8 +254,9 @@ $('#form2').zoiaFormBuilder({
     </div>
     <script src="jquery.min.js" type="text/javascript"></script>
     <script src="uikit.min.js" type="text/javascript"></script>
+    <script src="uikit-icons.min.js" type="text/javascript"></script>
     <script src="highlight.pack.js" type="text/javascript"></script>
-    <script src="../dist/jquery.zoiaFormBuilder.min.js" type="text/javascript"></script>
+    <script src="../jquery.zoiaFormBuilder.js" type="text/javascript"></script>
     <script type="text/javascript">
     $('#form1').zoiaFormBuilder({
         save: {
@@ -377,6 +379,11 @@ $('#form2').zoiaFormBuilder({
                 label: 'Launcher Field',
                 labelBtn: 'Select',
                 value: 'Current Value'
+            },
+            valueslist: {
+                label: 'Values List Field',
+                type: 'valueslist',
+                values: {"Hello world":"It's just a test","Another test":"Another value","Third item":"Last value"}
             },
             buttons: {
                 type: 'buttons',
