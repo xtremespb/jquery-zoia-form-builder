@@ -35,7 +35,7 @@
             checkboxlistItem: '<li><label><input class="uk-checkbox {prefix}-{name}-cbx" type="checkbox" data="{title}">&nbsp;&nbsp;{title}</label></li>',
             checkboxlist: '<div class="uk-margin-bottom"><label class="uk-form-label" for="{prefix}_{name}">{label}:</label><div class="uk-panel uk-panel-scrollable{css}" id="{prefix}_{name}_wrap"><ul class="uk-list">{items}</ul></div>{helpText}</div>',
             valueslistItem: '<div class="uk-flex uk-margin-top {prefix}-{name}-item"><div class="uk-margin-right"><input placeholder="{langParameter}" type="text" class="uk-input formBuilder-valueslist-par" value="{key}"></div><div class="uk-margin-right"><input placeholder="{langValue}" type="text" class="uk-input formBuilder-valueslist-val" value="{value}"></div><div style="padding-top:3px"><button class="uk-icon-button uk-button-danger formBuilder-valueslist-btnDel" uk-icon="icon:minus"></button></div></div>',
-            valueslist: '<button class="uk-icon-button uk-button-primary formBuilder-valueslist-btnAdd uk-margin-top" id="{prefix}_{name}_btnAdd" uk-icon="icon:plus" data-prefix="{prefix}" data-name="{name}"></button><div id="{prefix}_{name}_wrap" class="uk-margin-top uk-margin-bottom formBuilder-valueslist-wrap">{items}</div>'
+            valueslist: '<div class="uk-flex uk-flex-column"><div class="uk-margin-bottom"><label class="uk-form-label">{label}:</label></div><div><button type="button" class="uk-icon-button uk-button-primary formBuilder-valueslist-btnAdd" id="{prefix}_{name}_btnAdd" uk-icon="icon:plus" data-prefix="{prefix}" data-name="{name}"></button></div><div id="{prefix}_{name}_wrap" class="uk-margin-bottom formBuilder-valueslist-wrap">{items}</div></div>'
         },
         template: {
             fields: '{fields}',
@@ -127,6 +127,7 @@
                         fieldsHTML += this._template(this.settings.html.valueslist, {
                             prefix: this._prefix,
                             name: n,
+                            label: item.label,
                             items: valuesListItems
                         });
                         break;
