@@ -254,7 +254,7 @@
             });
             this._captchaInit();
         },
-        _valueslistAddFunc(prefix, name, key, value) {
+        _valueslistAddFunc(prefix, name, key, value, nofocus) {
             const valuesListItem = this._template(this.settings.html.valueslistItem, {
                 prefix: prefix,
                 name: name,
@@ -264,6 +264,9 @@
                 langValue: this.settings.lang.value
             });
             $('#' + prefix + '_' + name + '_wrap').append(valuesListItem);
+            if (!nofocus) {
+                $('.' + prefix + '-' + name + '-item').last().find('div>input:first').focus();
+            }
             $('.formBuilder-valueslist-btnDel').unbind();
             $('.formBuilder-valueslist-btnDel').click(function(e) {
                 e.stopPropagation();
@@ -325,15 +328,16 @@
                         }
                         break;
                     case 'valueslist':
-                        let values = {};
+                        let values = [];
                         $('.' + this._prefix + '-' + n + '-item').each(function() {
-                            let key = $(this).find('*>.formBuilder-valueslist-par').val();
-                            let val = $(this).find('*>.formBuilder-valueslist-val').val();
-                            values[key] = val;
+                            values.push({
+                                p: String($(this).find('*>.formBuilder-valueslist-par').val()),
+                                v: String($(this).find('*>.formBuilder-valueslist-val').val())
+                            });
                         });
                         json[n] = {
                             type: field.type,
-                            values: values
+                            value: values
                         };
                         break;
                     default:
@@ -369,13 +373,15 @@
                         break;
                     case 'valueslist':
                         let values = [];
-                        for (let v in json[n].values) {
-                            values.push(v);
-                            values.push(json[n].values[v]);
+                        for (let v in json[n].value) {
+                            values.push(json[n].value[v].p);
+                            values.push(json[n].value[v].v);
                         }
                         $('#' + this._prefix + '_' + n + '_wrap').html('');
-                        for (let i in json[n].values) {
-                            this._valueslistAddFunc(this._prefix, n, values.shift(), values.shift());
+                        while (values.length > 0) {
+                            const par = values.shift();
+                            const val = values.shift();
+                            this._valueslistAddFunc(this._prefix, n, par, val, true);
                         }
                         break;
                     default:
@@ -459,11 +465,17 @@
                     continue;
                 }
                 if (field.type === 'valueslist') {
-                    let values = {};
+                    if (items[n]) {
+                        data[n] = items[n].value;
+                        continue;
+                    }
+                    let values = [];
+                    let that = this;
                     $('.' + this._prefix + '-' + n + '-item').each(function() {
-                        let key = $(this).find('*>.formBuilder-valueslist-par').val();
-                        let val = $(this).find('*>.formBuilder-valueslist-val').val();
-                        values[key] = val;
+                        values.push({
+                            p: String($(this).find('*>.formBuilder-valueslist-par').val()),
+                            v: String($(this).find('*>.formBuilder-valueslist-val').val())
+                        });
                     });
                     data[n] = values;
                     continue;
